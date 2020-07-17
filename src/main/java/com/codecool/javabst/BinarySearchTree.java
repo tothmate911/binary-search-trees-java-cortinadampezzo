@@ -11,26 +11,44 @@ public class BinarySearchTree {
     private Node root;
 
     public static BinarySearchTree build(List<Integer> elements) {
-        // TODO construct a binary search tree here
         BinarySearchTree binarySearchTree = new BinarySearchTree();
 
         int middleIndex = elements.size() / 2;
-        Integer middleElement = elements.get(middleIndex);
 
-        binarySearchTree.root = ;
-        Node.builder()
-                .value(middleElement)
+        binarySearchTree.root = Node.builder()
+                .value(elements.get(middleIndex))
+                .left(buildBranch(elements, 0, middleIndex))
+                .right(buildBranch(elements, middleIndex + 1, elements.size() - 1))
+                .build();
 
         return binarySearchTree;
     }
 
+    private static Node buildBranch(List<Integer> elements, int low, int high) {
+        if (low >= high) return null;
+
+        int middleIndex = low + (high - low) / 2;
+
+        return Node.builder()
+                .value(elements.get(middleIndex))
+                .left(buildBranch(elements, low, middleIndex))
+                .right(buildBranch(elements, middleIndex + 1, high))
+                .build();
+    }
+
     public boolean search(Integer toFind) {
-        // TODO return true if the element has been found, false if its not in the tree.
+        Node currentNode = root;
+
+        while (currentNode != null) {
+            if (currentNode.getValue().equals(toFind)) return true;
+            currentNode = currentNode.getValue() > toFind ? currentNode.getLeft() : currentNode.getRight();
+        }
         return false;
     }
 
     public void add(Integer toAdd) {
         // TODO adds an element. Throws an error if it exist.
+
     }
 
     public void remove(Integer toRemove) {
