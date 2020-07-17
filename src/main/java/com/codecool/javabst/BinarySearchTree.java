@@ -1,13 +1,27 @@
 package com.codecool.javabst;
 
+import lombok.Data;
+
 import java.util.List;
 
 // Skeleton for the Binary search tree. Feel free to modify this class.
+@Data
 public class BinarySearchTree {
+
+    private Node root;
 
     public static BinarySearchTree build(List<Integer> elements) {
         // TODO construct a binary search tree here
-        return null;
+        BinarySearchTree binarySearchTree = new BinarySearchTree();
+
+        int middleIndex = elements.size() / 2;
+        Integer middleElement = elements.get(middleIndex);
+
+        binarySearchTree.root = ;
+        Node.builder()
+                .value(middleElement)
+
+        return binarySearchTree;
     }
 
     public boolean search(Integer toFind) {
