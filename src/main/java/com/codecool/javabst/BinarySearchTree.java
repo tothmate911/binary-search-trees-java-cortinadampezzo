@@ -41,14 +41,38 @@ public class BinarySearchTree {
 
         while (currentNode != null) {
             if (currentNode.getValue().equals(toFind)) return true;
-            currentNode = currentNode.getValue() > toFind ? currentNode.getLeft() : currentNode.getRight();
+            currentNode = toFind < currentNode.getValue() ? currentNode.getLeft() : currentNode.getRight();
         }
         return false;
     }
 
-    public void add(Integer toAdd) {
+    public void add(Integer toAdd) throws Exception {
         // TODO adds an element. Throws an error if it exist.
 
+        Node currentNode = root;
+
+        while (true) {
+            if (currentNode.getValue().equals(toAdd)) throw new Exception();
+            if (toAdd < currentNode.getValue()) {
+                if (currentNode.getLeft() != null) {
+                    currentNode = currentNode.getLeft();
+                } else {
+                    currentNode.setLeft(Node.builder()
+                            .value(toAdd)
+                            .build());
+                    break;
+                }
+            } else {
+                if (currentNode.getRight() != null) {
+                    currentNode = currentNode.getRight();
+                } else {
+                    currentNode.setRight(Node.builder()
+                            .value(toAdd)
+                            .build());
+                    break;
+                }
+            }
+        }
     }
 
     public void remove(Integer toRemove) {
