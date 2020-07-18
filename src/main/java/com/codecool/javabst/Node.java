@@ -19,4 +19,20 @@ public class Node {
                 ", right=" + (right != null ? right.getValue() : null) +
                 '}';
     }
+
+    public boolean isLeaf() {
+        return right == null && left == null;
+    }
+
+    public boolean hasOnlyOneChild() {
+        return !this.isLeaf() && (right == null || left == null);
+    }
+
+    public boolean hasLeft() {
+        return this.left != null;
+    }
+
+    public boolean hasRight() {
+        return this.right != null;
+    }
 }

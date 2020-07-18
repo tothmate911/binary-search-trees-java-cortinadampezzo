@@ -2,10 +2,11 @@ package com.codecool.javabst;
 
 import lombok.Data;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 // Skeleton for the Binary search tree. Feel free to modify this class.
-@Data
 public class BinarySearchTree {
 
     private Node root;
@@ -47,12 +48,11 @@ public class BinarySearchTree {
     }
 
     public void add(Integer toAdd) throws Exception {
-        // TODO adds an element. Throws an error if it exist.
-
         Node currentNode = root;
 
         while (true) {
             if (currentNode.getValue().equals(toAdd)) throw new Exception();
+
             if (toAdd < currentNode.getValue()) {
                 if (currentNode.getLeft() != null) {
                     currentNode = currentNode.getLeft();
@@ -75,8 +75,96 @@ public class BinarySearchTree {
         }
     }
 
-    public void remove(Integer toRemove) {
-        // TODO removes an element. Throws an error if its not on the tree.
+    public void remove(Integer toRemove) throws Exception {
+        Map<String, Node> toRemoveAndParent = getNodeAndParent(toRemove);
+        Node toRemoveNode = toRemoveAndParent.get("searched node");
+        Node toRemoveParentNode = toRemoveAndParent.get("parent node");
+
+        if (toRemoveNode.isLeaf()) {
+            removeLeaf(toRemoveNode, toRemoveParentNode);
+            return;
+        }
+        if (toRemoveNode.hasOnlyOneChild()) {
+            removeOneChildNode(toRemoveNode, toRemoveParentNode);
+            return;
+        }
+
+        Map<String, Node> toReplaceWithAndParent = getToReplaceWithAndParent(toRemoveNode);
+        Node toReplaceWithNode = toReplaceWithAndParent.get("searched node");
+        Node toReplaceWithParentNode = toReplaceWithAndParent.get("parent node");
+
+        removeNodeAndRearrangeTree(toRemoveNode, toRemoveParentNode,
+                toReplaceWithNode, toReplaceWithParentNode);
+    }
+
+    private void removeNodeAndRearrangeTree(Node toRemoveNode, Node toRemoveParentNode,
+                                            Node toReplaceWithNode, Node toReplaceWithParentNode) {
+        if (toRemoveNode == root) {
+            root = toReplaceWithNode;
+        } else if (toRemoveParentNode.getLeft() == toRemoveNode) {
+            toRemoveParentNode.setLeft(toReplaceWithNode);
+        } else {
+            toRemoveParentNode.setRight(toReplaceWithNode);
+        }
+
+        toReplaceWithNode.setLeft(toRemoveNode.getLeft());
+
+        if (toReplaceWithParentNode != toRemoveParentNode) {
+            if (toReplaceWithNode.hasRight()) {
+                toReplaceWithParentNode.setLeft(toRemoveNode.getRight());
+            } else {
+                toReplaceWithParentNode.setLeft(null);
+            }
+        }
+    }
+
+    private Map<String, Node> getNodeAndParent(Integer toRemove) throws Exception {
+        Map<String, Node> nodeAndParent = new HashMap<>();
+        Node currentNode = root;
+        Node currentParentNode = null;
+
+        while (currentNode != null) {
+            if (toRemove.equals(currentNode.getValue())) {
+                nodeAndParent.put("searched node", currentNode);
+                nodeAndParent.put("parent node", currentParentNode);
+                return nodeAndParent;
+            }
+            currentParentNode = currentNode;
+            currentNode = toRemove < currentNode.getValue() ? currentNode.getLeft() : currentNode.getRight();
+        }
+        throw new Exception();
+    }
+
+    private void removeLeaf(Node toRemoveNode, Node toRemoveParentNode) {
+        if (toRemoveParentNode.getLeft() == toRemoveNode) {
+            toRemoveParentNode.setLeft(null);
+        } else {
+            toRemoveParentNode.setRight(null);
+        }
+    }
+
+    private void removeOneChildNode(Node toRemoveNode, Node toRemoveParentNode) {
+        Node theOneChildOfToRemoveNode = toRemoveNode.hasLeft() ? toRemoveNode.getLeft() : toRemoveNode.getRight();
+
+        if (toRemoveParentNode.getLeft() == toRemoveNode) {
+            toRemoveParentNode.setLeft(theOneChildOfToRemoveNode);
+        } else {
+            toRemoveParentNode.setRight(theOneChildOfToRemoveNode);
+        }
+    }
+
+    private Map<String, Node> getToReplaceWithAndParent(Node toRemoveNode) {
+        Map<String, Node> nodeAndParent = new HashMap<>();
+        Node currentNode = toRemoveNode.getRight();
+        Node currentParentNode = toRemoveNode;
+
+        while (currentNode.hasLeft()) {
+            currentParentNode = currentNode;
+            currentNode = currentNode.getLeft();
+        }
+        nodeAndParent.put("searched node", currentNode);
+        nodeAndParent.put("parent node", currentParentNode);
+        return nodeAndParent;
     }
 
 }
