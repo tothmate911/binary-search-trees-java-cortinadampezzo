@@ -18,7 +18,7 @@ public class BinarySearchTree {
 
         binarySearchTree.root = Node.builder()
                 .value(elements.get(middleIndex))
-                .left(buildBranch(elements, 0, middleIndex))
+                .left(buildBranch(elements, 0, middleIndex - 1))
                 .right(buildBranch(elements, middleIndex + 1, elements.size() - 1))
                 .build();
 
@@ -49,6 +49,9 @@ public class BinarySearchTree {
 
     public void add(Integer toAdd) throws Exception {
         Node currentNode = root;
+        Node toAddNode = Node.builder()
+                .value(toAdd)
+                .build();
 
         while (true) {
             if (currentNode.getValue().equals(toAdd)) throw new Exception();
@@ -57,18 +60,14 @@ public class BinarySearchTree {
                 if (currentNode.getLeft() != null) {
                     currentNode = currentNode.getLeft();
                 } else {
-                    currentNode.setLeft(Node.builder()
-                            .value(toAdd)
-                            .build());
+                    currentNode.setLeft(toAddNode);
                     break;
                 }
             } else {
                 if (currentNode.getRight() != null) {
                     currentNode = currentNode.getRight();
                 } else {
-                    currentNode.setRight(Node.builder()
-                            .value(toAdd)
-                            .build());
+                    currentNode.setRight(toAddNode);
                     break;
                 }
             }
