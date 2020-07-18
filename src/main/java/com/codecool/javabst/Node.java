@@ -35,4 +35,5 @@ public class Node {
     public boolean hasRight() {
         return this.right != null;
     }
+
 }

@@ -22,14 +22,23 @@ public class Main {
         System.out.println("search for 34535, should be false: " + myTree.search(34535)); // should be false
         System.out.println();
 
-        System.out.println("search for 34, should be false: " + myTree.search(34));
-        myTree.add(34);
-        System.out.println("add 34 and search for 34, should be true: " + myTree.search(34));
+        int x = 34;
+        System.out.println("search for " + x + ", should be false: " + myTree.search(x));
+        myTree.add(x);
+        System.out.println("add " + x + " and search for " + x + ", should be true: " + myTree.search(34));
         System.out.println();
 
-        System.out.println("search for 77, should be true: " + myTree.search(77) );
-        myTree.remove(77);
-        System.out.println("remove 77 and search for 77, should be false: " + myTree.search(77));;
+        x = 77;
+        System.out.println("search for " + x + ", should be true: " + myTree.search(x) );
+        myTree.remove(x);
+        System.out.println("remove " + x + " and search for " + x + ", should be false: " + myTree.search(x));
+        System.out.println();
+
+        x = 55;
+        System.out.println("search for " + x + ", should be true: " + myTree.search(x) );
+        myTree.remove(x);
+        System.out.println("remove " + x + " and search for " + x + ", should be false: " + myTree.search(x));
+        System.out.println();
 
     }
 }
