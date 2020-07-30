@@ -109,11 +109,7 @@ public class BinarySearchTree {
         toReplaceWithNode.setLeft(toRemoveNode.getLeft());
 
         if (toReplaceWithParentNode != toRemoveParentNode) {
-            if (toReplaceWithNode.hasRight()) {
-                toReplaceWithParentNode.setLeft(toRemoveNode.getRight());
-            } else {
-                toReplaceWithParentNode.setLeft(null);
-            }
+            toReplaceWithParentNode.setLeft(toRemoveNode.getRight());
         }
     }
 
