@@ -26,13 +26,13 @@ public class BinarySearchTree {
     }
 
     private static Node buildBranch(List<Integer> elements, int low, int high) {
-        if (low >= high) return null;
+        if (low > high) return null;
 
         int middleIndex = low + (high - low) / 2;
 
         return Node.builder()
                 .value(elements.get(middleIndex))
-                .left(buildBranch(elements, low, middleIndex))
+                .left(buildBranch(elements, low, middleIndex - 1))
                 .right(buildBranch(elements, middleIndex + 1, high))
                 .build();
     }
@@ -162,4 +162,10 @@ public class BinarySearchTree {
         return nodeAndParent;
     }
 
+    @Override
+    public String toString() {
+        return "BinarySearchTree{" +
+                "root=" + root +
+                '}';
+    }
 }

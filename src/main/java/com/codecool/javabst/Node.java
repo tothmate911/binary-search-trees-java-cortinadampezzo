@@ -15,8 +15,8 @@ public class Node {
     public String toString() {
         return "Node{" +
                 "value=" + value +
-                ", left=" + (left != null ? left.getValue() : null) +
-                ", right=" + (right != null ? right.getValue() : null) +
+                ", left=" + (left != null ? left : null) +
+                ", right=" + (right != null ? right : null) +
                 '}';
     }
 

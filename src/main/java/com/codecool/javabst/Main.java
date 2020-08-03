@@ -15,6 +15,7 @@ public class Main {
         }
 
         BinarySearchTree myTree = BinarySearchTree.build(numbers);
+        System.out.println(myTree);
 
         // write some test code here
         System.out.println("search for 7, should be true: " + myTree.search(7)); // should be true
@@ -22,10 +23,11 @@ public class Main {
         System.out.println("search for 34535, should be false: " + myTree.search(34535)); // should be false
         System.out.println();
 
-        int x = 34;
+        int x = 58;
         System.out.println("search for " + x + ", should be false: " + myTree.search(x));
         myTree.add(x);
-        System.out.println("add " + x + " and search for " + x + ", should be true: " + myTree.search(34));
+        System.out.println("add " + x + " and search for " + x + ", should be true: " + myTree.search(x));
+        System.out.println(myTree);
         System.out.println();
 
         x = 77;
@@ -39,6 +41,7 @@ public class Main {
         myTree.remove(x);
         System.out.println("remove " + x + " and search for " + x + ", should be false: " + myTree.search(x));
         System.out.println();
+
 
     }
 }
