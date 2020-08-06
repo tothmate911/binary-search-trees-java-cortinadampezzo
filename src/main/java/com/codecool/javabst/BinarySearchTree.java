@@ -1,7 +1,5 @@
 package com.codecool.javabst;
 
-import lombok.Data;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,13 +12,15 @@ public class BinarySearchTree {
     public static BinarySearchTree build(List<Integer> elements) {
         BinarySearchTree binarySearchTree = new BinarySearchTree();
 
-        int middleIndex = elements.size() / 2;
+//        int middleIndex = elements.size() / 2;
 
-        binarySearchTree.root = Node.builder()
-                .value(elements.get(middleIndex))
-                .left(buildBranch(elements, 0, middleIndex - 1))
-                .right(buildBranch(elements, middleIndex + 1, elements.size() - 1))
-                .build();
+        binarySearchTree.root = buildBranch(elements, 0, elements.size() - 1);
+
+//        binarySearchTree.root = Node.builder()
+//                .value(elements.get(middleIndex))
+//                .left(buildBranch(elements, 0, middleIndex - 1))
+//                .right(buildBranch(elements, middleIndex + 1, elements.size() - 1))
+//                .build();
 
         return binarySearchTree;
     }
@@ -108,14 +108,17 @@ public class BinarySearchTree {
 
         toReplaceWithNode.setLeft(toRemoveNode.getLeft());
 
-        if (toReplaceWithParentNode != toRemoveParentNode) {
-            toReplaceWithParentNode.setLeft(toRemoveNode.getRight());
+        if (toRemoveNode != toReplaceWithParentNode) {
+            toReplaceWithParentNode.setLeft(toReplaceWithNode.getRight());
+            toReplaceWithNode.setRight(toRemoveNode.getRight());
         }
+
     }
 
     private Map<String, Node> getNodeAndParent(Integer toRemove) throws Exception {
         Map<String, Node> nodeAndParent = new HashMap<>();
         Node currentNode = root;
+//        Pair
         Node currentParentNode = null;
 
         while (currentNode != null) {
